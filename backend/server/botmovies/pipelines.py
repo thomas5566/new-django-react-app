@@ -91,31 +91,17 @@ class PttPipeline:
 
 
 class YahooPipeline:
-
     def process_item(self, item, spider):
-
-        item["title"] = clean_title(item["title"])
-        item["duration"] = clean_duration(item["duration"])
-        item["amount_reviews"] = clean_amount_reviews(item["amount_reviews"])
-        item["rating"] = clean_rating(item["rating"])
-        # item["tags"] = clean_tags(item["tags"])
-        item["release_date"] = clean_date(item["release_date"])
-        item["critics_consensus"] = clean_critics_consensus(item["critics_consensus"])
-        item["images"] = clean_images(item["images"])
-
-        try:
-            Movie.objects.create(
-                title=item["title"],
-                duration=item["duration"],
-                amount_reviews=item["amount_reviews"],
-                rating=item["rating"],
-                release_date=item["release_date"],
-                critics_consensus=item["critics_consensus"],
-                genre=item["genre"],
-                images=item["images"],
-            )
-        except:
-            print("The movie information is already exists!!")
+        movie = Movie()
+        movie.title = clean_title(item["title"])
+        movie.duration = clean_duration(item["duration"])
+        movie.amount_reviews = clean_amount_reviews(item["amount_reviews"])
+        movie.rating = clean_rating(item["rating"])
+        movie.release_date = clean_date(item["release_date"])
+        movie.critics_consensus = item["critics_consensus"],
+        movie.genre = clean_critics_consensus(item["critics_consensus"])
+        movie.images = clean_images(item["images"])
+        movie.save()
 
         return item
 
@@ -139,7 +125,6 @@ class YahooPipeline:
     #     self.connection.close()
 
     # def process_item(self, item, spider):
-
     #     item["title"] = clean_title(item["title"])
     #     item["duration"] = clean_duration(item["duration"])
     #     item["amount_reviews"] = clean_amount_reviews(item["amount_reviews"])

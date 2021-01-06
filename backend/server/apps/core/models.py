@@ -73,7 +73,8 @@ class Movie(models.Model):
     """Movielist object"""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        default=1
     )
     title = models.CharField(max_length=255)
     duration = models.CharField(max_length=255, blank=True, null=True)

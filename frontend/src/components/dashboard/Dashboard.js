@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { logout } from "../login/LoginActions";
 
 import MovieList from "../movies/MoviesList";
 import AddMovie from "../movies/AddMovie";
+
 
 class Dashboard extends Component {
     onLogout = () => {
@@ -18,16 +18,18 @@ class Dashboard extends Component {
         const { user } = this.props.auth;
         return (
             <div>
-                <Navbar bg="light">
-                    <Navbar.Brand href="/">Home</Navbar.Brand>
-                    <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        User: <b>{user.email}</b>
-                    </Navbar.Text>
-                    <Nav.Link onClick={this.onLogout}>Logout</Nav.Link>
-                    </Navbar.Collapse>
-                </Navbar>
+                <nav class="navbar navbar-dark bg-dark">
+                    <Navbar >
+                        <Navbar.Brand href="/">Home</Navbar.Brand>
+                        <Navbar.Toggle />
+                        <Navbar.Collapse className="justify-content-end">
+                        <Navbar.Text>
+                            User: <b>{user.email}</b>
+                        </Navbar.Text>
+                        <Nav.Link onClick={this.onLogout}>Logout</Nav.Link>
+                        </Navbar.Collapse>
+                    </Navbar>
+                </nav>
                 <Container>
                     <MovieList />
                     <AddMovie />

@@ -20,8 +20,10 @@ import pandas as pd
 class FilterAndInsertData():
     """Analysis scrapy data"""
 
-    movies = pd.read_csv("/app/backend/server/ptt.csv").dropna(how="all")
-    titles = pd.read_csv("/app/backend/server/yahoo.csv")
+    # movies = pd.read_csv("/app/backend/server/ptt.csv").dropna(how="all")
+    # titles = pd.read_csv("/app/backend/server/yahoo.csv")
+    movies = pd.read_csv("ptt.csv").dropna(how="all")
+    titles = pd.read_csv("yahoo.csv")
 
     movies["title"] = movies["title"].astype("category")
     key_word = titles.iloc[:, 8]
@@ -29,7 +31,7 @@ class FilterAndInsertData():
     # 找到含有相同電影名稱的title 並新增一個新欄位'key_word' 最後insert to database
     newDF = pd.DataFrame()
     for key in key_word:
-        mask = movies["title"].str.contains(key)  # string compare
+        mask = movies["title"].str.contains(str(key))  # string compare
         movies["key_word"] = key  # Add new column
         newDF = newDF.append(movies[mask], ignore_index=True)
 
@@ -95,7 +97,7 @@ class FilterAndInsertData():
                         movie=Movie.objects.get(title=record2["title_x"]),  # foreign key
                     )
                 except:
-                    print(record2["title_x"] + ' is not match any movie title!!')
+                    print(str(record2["title_x"]) + ' is not match any movie title!!')
 
     InsertPttComment(inser_pttcomment)
     InsertGoodAndBadRay(inser_goodandbad)

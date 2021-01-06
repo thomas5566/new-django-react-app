@@ -79,21 +79,21 @@ class MovieViewSet(viewsets.ModelViewSet):
         """Convert a list of string IDs to a list of integers"""
         return [int(str_id) for str_id in qs.split(',')]
 
-    # def get_queryset(self):
-    #     """Retrieve the movielist for the authenticated user"""
-    #     tags = self.request.query_params.get('tags')
-    #     comments = self.request.query_params.get('comments')
-    #     queryset = self.queryset
+    def get_queryset(self):
+        """Retrieve the movielist for the authenticated user"""
+        tags = self.request.query_params.get('tags')
+        comments = self.request.query_params.get('comments')
+        queryset = self.queryset
 
-    #     if tags:
-    #         tag_ids = self._params_to_ints(tags)
-    #         queryset = queryset.filter(tags__id__in=tag_ids)
+        if tags:
+            tag_ids = self._params_to_ints(tags)
+            queryset = queryset.filter(tags__id__in=tag_ids)
 
-    #     if comments:
-    #         comments_ids = self._params_to_ints(comments)
-    #         queryset = queryset.filter(comments__id__in=comments_ids)
+        if comments:
+            comments_ids = self._params_to_ints(comments)
+            queryset = queryset.filter(comments__id__in=comments_ids)
 
-    #     return queryset.filter(user=self.request.user)
+        return queryset.filter(user=self.request.user).order_by('-rating')
 
     def get_serializer_class(self):
         """Return appropriate serializer class"""

@@ -82,3 +82,16 @@ class CountGoodAndBadSerializer(serializers.ModelSerializer):
         model = CountGoodAndBad
         fields = ('id', 'good_ray', 'bad_ray', 'movie')
         read_only_fields = ('id',)
+
+
+class YahooMovieSerializer(serializers.ModelSerializer):
+    """Serialize a YahooMovielist"""
+
+    class Meta:
+        model = Movie
+        fields = (
+            'id', 'title', 'duration', 'amount_reviews', 'rating',
+            'release_date', 'last_modified', 'link', 'comments',
+            'tags', 'images',
+        )
+        read_only_fields = ('id',)

@@ -7,7 +7,7 @@ from . import views
 routers = DefaultRouter()
 
 routers.register('tags', views.TagViewSet)
-routers.register('comments', views.CommentViewSet)
+# routers.register('comments', views.CommentViewSet)
 routers.register('movies', views.MovieViewSet)
 routers.register('movieimages', views.MovieImageViewSet)
 routers.register('pttcomments', views.PttCommentViewSet)
