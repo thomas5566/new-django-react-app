@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getMovies } from "./MoviesActions";
 import { Link } from 'react-router-dom'
+import { Container, Row } from 'react-bootstrap';
 
 import Movie from "./Movie";
 
@@ -51,6 +52,11 @@ class MoviesList extends Component {
     }
 
     render() {
+        const style={
+            display: 'flex',
+            flexWrap: 'wrap'
+        }
+
         const { movies } = this.props.movies;
 
         if (movies.length === 0) {
@@ -58,13 +64,40 @@ class MoviesList extends Component {
         }
 
         let items = movies.map(movie => {
-            return <Movie key={movie.id} movie={movie} />;
+            return (
+                // <Movie key={movie.id} movie={movie} />
+                <div className="catalog__item" key={movie.id}>
+                    <div className="catalog__item__img">
+                        <img src={movie.images} alt={movie.title} />
+                        <div className="catalog__item__resume"> {movie.duration}</div>
+                    </div>
+                    <div className="catalog__item__footer">
+                        <div className="catalog__item__footer__name">
+                            {movie.title} ({new Date(movie.release_date).getFullYear()})
+                        </div>
+                        <div className="catalog__item__footer__rating">{movie.rating}</div>
+                    </div>
+                        <Link
+                            to={{
+                                pathname: `/movie/${movie.id}`,
+                                state: { items: movie }
+                            }}
+                        >
+                        <button>View</button>
+                    </Link>
+                </div>
+            );
         });
 
         return (
-            <div className="catalogContainer">
-                {items}
-            </div>
+            <Container fluid={false}>
+                    <Row style={style}>
+                        {items}
+                    </Row>
+            </Container >
+            // <div className="catalogContainer">
+            //     {items}
+            // </div>
         );
     }
 }

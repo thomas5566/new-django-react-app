@@ -9,6 +9,7 @@ import MovieList from "../movies/MoviesList";
 import AddMovie from "../movies/AddMovie";
 
 
+
 class Dashboard extends Component {
     onLogout = () => {
         this.props.logout();
@@ -17,6 +18,7 @@ class Dashboard extends Component {
     render() {
         const { user } = this.props.auth;
         return (
+
             <div>
                 <nav class="navbar navbar-dark bg-dark">
                     <Navbar >

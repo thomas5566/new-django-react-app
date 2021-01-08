@@ -16,6 +16,7 @@ class BasseMovielistAttrViewSet(viewsets.GenericViewSet,
     """Base viewset for user owned movielist attributes"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    # permission_classes = [HasAPIKey | IsAuthenticated]
 
     def get_queryset(self):
         """Return objects for the current authenticated user only"""
@@ -47,6 +48,7 @@ class CommentViewSet(viewsets.GenericViewSet,
     """Manage comment in the database"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    # permission_classes = [HasAPIKey | IsAuthenticated]
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
 
@@ -74,6 +76,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    # permission_classes = [HasAPIKey | IsAuthenticated]
 
     def _params_to_ints(self, qs):
         """Convert a list of string IDs to a list of integers"""

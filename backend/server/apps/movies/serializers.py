@@ -21,6 +21,15 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'last_modified', 'key_word')
 
 
+class PttCommentSerializer(serializers.ModelSerializer):
+    """Serializer for PttComments to movies"""
+
+    class Meta:
+        model = PttComment
+        fields = ('id', 'author', 'contenttext', 'date', 'title', 'key_word')
+        read_only_fields = ('id',)
+
+
 class MovieSerializer(serializers.ModelSerializer):
     """Serialize a Movielist"""
     comments = serializers.PrimaryKeyRelatedField(
@@ -31,15 +40,23 @@ class MovieSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Tag.objects.all()
     )
+    pttcomments = PttCommentSerializer(many=True)
 
     class Meta:
         model = Movie
         fields = (
             'id', 'title', 'duration', 'amount_reviews', 'rating',
             'release_date', 'last_modified', 'link', 'comments',
-            'tags', 'images',
+            'tags', 'images', 'critics_consensus', 'pttcomments',
         )
         read_only_fields = ('id',)
+
+    def create(self, validated_data):
+        pttcomments_data = validated_data.pop('pttcomments')
+        movie = Movie.objects.create(**validated_data)
+        for pttcomment_data in pttcomments_data:
+            PttComment.objects.create(movie=movie, **pttcomment_data)
+        return movie
 
 
 class MovieDetailSerializer(MovieSerializer):
@@ -66,13 +83,6 @@ class MutiMovieImagesSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class PttCommentSerializer(serializers.ModelSerializer):
-    """Serializer for PttComments to movies"""
-
-    class Meta:
-        model = PttComment
-        fields = ('id', 'author', 'contenttext', 'date', 'title', 'key_word')
-        read_only_fields = ('id',)
 
 
 class CountGoodAndBadSerializer(serializers.ModelSerializer):

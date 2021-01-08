@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Signup from "./components/signup/Signup";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import Movie from "./components/movies/Movie";
 import { ToastContainer } from "react-toastify";
 import requireAuth from "./utils/RequireAuth";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/dashboard" component={requireAuth(Dashboard)} />
             <Route exact path="/" component={Home} />
+            <Route exact path="/movie/:id" component={Movie} />
             <Root path="*">Ups</Root>
           </Switch>
         </Root>
