@@ -20,7 +20,7 @@ It uses Scrapy crawl web informations and Django REST framework Database API.
 ![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/4.png)
 ![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/5.png)
 ![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/6.png)
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/1.png)
+![](https://github.com/thomas5566/new-django-react-app/tree/main/frontend/docs/images/1.png)
 ![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/2.png)
 
 ## Technical Notes
