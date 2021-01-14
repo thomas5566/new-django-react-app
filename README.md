@@ -16,13 +16,12 @@ It uses Scrapy crawl web informations and Django REST framework Database API.
 - PostgreSQL database
 
 ## Screenshots
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/3.png" /></kbd>
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/4.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/5.png" /></kbd>
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/3.png)
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/4.png)
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/5.png)
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/6.png)
-![](https://github.com/thomas5566/new-django-react-app/tree/main/frontend/docs/images/1.png)
-![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/2.png)
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/6.png" /></kbd>
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/1.png" /></kbd>
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/2.png" /></kbd>
 
 ## Technical Notes
 * Followed [Scrapy 2.4](https://docs.scrapy.org/en/latest/)
