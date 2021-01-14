@@ -26,5 +26,5 @@ It uses Scrapy crawl web informations and Django REST framework Database API.
 ## Technical Notes
 * Followed [Scrapy 2.4](https://docs.scrapy.org/en/latest/)
 * Followed [Django REST framewor](https://www.django-rest-framework.org/)
+* Followed [Docker](https://docs.docker.com/)
 * Followed [Getting Started with Create React App](https://github.com/saasitive/django-react-boilerplate)
-
