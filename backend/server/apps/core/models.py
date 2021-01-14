@@ -59,6 +59,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Tag(models.Model):
     """Tag to be used for a recipe"""
     name = models.CharField(max_length=255)
+    last_modified = models.DateTimeField('Last_modified',
+                                         auto_now=True,
+                                         blank=True)
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -96,7 +99,7 @@ class Movie(models.Model):
     link = models.CharField(max_length=255, blank=True, null=True)
     comments = models.ManyToManyField('Comment', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
-    images = models.ImageField("Images", blank=True, upload_to="./web/media/")
+    images = models.ImageField("Images", blank=True, upload_to="./django_media/")
 
     def __str__(self):
         return self.title
@@ -120,14 +123,6 @@ class Comment(models.Model):
         return self.title
 
 
-class MovieImage(models.Model):
-    movie = models.ForeignKey(Movie, default=None, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to="./web/media/")
-
-    def __str__(self):
-        return self.movie.title
-
-
 class PttComment(models.Model):
     author = models.CharField("Author", max_length=255, blank=True)
     contenttext = models.TextField("Contenttext", blank=True)
@@ -142,7 +137,17 @@ class PttComment(models.Model):
 class CountGoodAndBad(models.Model):
     good_ray = models.IntegerField("Good_ray", default=0)
     bad_ray = models.IntegerField("Bad_ray", default=0)
-    movie = models.ForeignKey(Movie, default=None, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, default=None, on_delete=models.CASCADE, related_name="countgoodandbads")
+
+    def __str__(self):
+        return self.movie.title
+
+
+class SliderMovieImage(models.Model):
+    # movie = models.ForeignKey(Movie, default=None, on_delete=models.CASCADE)
+    # name = models.CharField(max_length=255)
+    images = models.ImageField("Image_path", blank=True, upload_to="./upload_images/")
+    movie = models.ForeignKey(Movie, default=None, on_delete=models.CASCADE, related_name="slidermovieimages")
 
     def __str__(self):
         return self.movie.title

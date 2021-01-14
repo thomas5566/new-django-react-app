@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from rest_framework import generics, viewsets, mixins, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 
-from ..core.models import Tag, Comment, Movie, MovieImage, PttComment, CountGoodAndBad
+from ..core.models import Tag, Comment, Movie, SliderMovieImage, PttComment, CountGoodAndBad
 
 from . import serializers
 
@@ -29,7 +30,7 @@ class BasseMovielistAttrViewSet(viewsets.GenericViewSet,
 
         return queryset.filter(
             user=self.request.user
-        ).order_by('-name').distinct()
+        ).order_by('-last_modified').distinct()
 
     def perform_create(self, serializer):
         """Create a new comment"""
@@ -42,32 +43,55 @@ class TagViewSet(BasseMovielistAttrViewSet):
     serializer_class = serializers.TagSerializer
 
 
-class CommentViewSet(viewsets.GenericViewSet,
-                     mixins.ListModelMixin,
-                     mixins.CreateModelMixin):
+class CommentViewSet(BasseMovielistAttrViewSet):
     """Manage comment in the database"""
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
     # permission_classes = [HasAPIKey | IsAuthenticated]
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
 
-    def get_queryset(self):
-        """Return objects for the current authenticated user only"""
-        assigned_only = bool(
-            int(self.request.query_params.get('assigned_only', 0))
-        )
-        queryset = self.queryset
-        if assigned_only:
-            queryset = queryset.filter(movie__isnull=False)
+    # def get_queryset(self):
+    #     """Return objects for the current authenticated user only"""
+    #     assigned_only = bool(
+    #         int(self.request.query_params.get('assigned_only', 0))
+    #     )
+    #     queryset = self.queryset
+    #     if assigned_only:
+    #         queryset = queryset.filter(movie__isnull=False)
 
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-title').distinct()
+    #     return queryset.filter(
+    #         user=self.request.user
+    #     ).order_by('-title').distinct()
 
-    def perform_create(self, serializer):
-        """Create a new comment"""
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     """Create a new comment"""
+    #     serializer.save(user=self.request.user)
+
+
+class PttCommentViewSet(viewsets.GenericViewSet,
+                        mixins.ListModelMixin,
+                        mixins.CreateModelMixin):
+    queryset = PttComment.objects.all()
+    serializer_class = serializers.PttCommentSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['key_word']
+
+
+class CountGoodAndBadViewSet(viewsets.GenericViewSet,
+                             mixins.ListModelMixin,
+                             mixins.CreateModelMixin):
+    queryset = CountGoodAndBad.objects.all()
+    serializer_class = serializers.CountGoodAndBadSerializer
+
+
+class SliderMovieImageViewSet(viewsets.GenericViewSet,
+                              mixins.ListModelMixin,
+                              mixins.CreateModelMixin):
+    queryset = SliderMovieImage.objects.all()
+    serializer_class = serializers.SliderMovieImageSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['movie']
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -131,24 +155,3 @@ class MovieViewSet(viewsets.ModelViewSet):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
-class MovieImageViewSet(viewsets.GenericViewSet,
-                        mixins.ListModelMixin,
-                        mixins.CreateModelMixin):
-    queryset = MovieImage.objects.all()
-    serializer_class = serializers.MovieImageSerializer
-
-
-class PttCommentViewSet(viewsets.GenericViewSet,
-                        mixins.ListModelMixin,
-                        mixins.CreateModelMixin):
-    queryset = PttComment.objects.all()
-    serializer_class = serializers.PttCommentSerializer
-
-
-class CountGoodAndBadViewSet(viewsets.GenericViewSet,
-                             mixins.ListModelMixin,
-                             mixins.CreateModelMixin):
-    queryset = CountGoodAndBad.objects.all()
-    serializer_class = serializers.CountGoodAndBadSerializer

@@ -1,26 +1,30 @@
-# Django with Scrapy
+# Movie Web App
 
-1. Build the image:
-   docker-compose build
-2. Run the container:
-   docker-compose up -d
-3. Build the new image and spin up the two containers:
-   docker-compose up -d --build
-4. Check the Django tables were created:
-   docker-compose exec db psql --username=postgres --dbname=best_movie
-5. Check that the volume was created as well by running:
-   docker volume inspect pgdata
-6. if the container fails to start, check for errors in the logs via:
-   docker-compose -f docker-compose.prod.yml logs -f.
-7. run env
-   .\env\Scripts\activate
-8. shoudown Docker container
-   docker-compose down -v
-   docker-compose -f docker-compose.prod.yml down -v
-9. Run program
-   docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-10. Start Scrapy project
-   scrapy startproject myproject [project_dir]
-   scrapy genspider -t crawl scrapyorg scrapy.org
-11. LookUp database
-   docker-compose exec app python manage.py dbshell
+This is a Movie App built in [ReactJS].
+It uses Scrapy crawl web informations and Django REST framework Database API.
+
+## Live Demo
+[Django & ReactJS App] (https://github.com/thomas5566/new-django-react-app)
+
+## Features
+- Scrapy 2.0
+- Backend with Django Rest Framework API: Authentication, Creating objects, Filtering, Uploading image
+- Authentication with DRF `authtoken`
+- Frontend with React: List popular movies, View detail movie info including PTT Comments
+- Bootstrap for styling
+- Deployment with docker-compose
+- PostgreSQL database
+
+## Screenshots
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/3.png)
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/4.png)
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/5.png)
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/6.png)
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/1.png)
+![](https://github.com/thomas5566/new-django-react-app/frontend/docs/images/2.png)
+
+## Technical Notes
+* Followed [Scrapy 2.4](https://docs.scrapy.org/en/latest/)
+* Followed [Django REST framewor](https://www.django-rest-framework.org/)
+* Followed [Getting Started with Create React App](https://github.com/saasitive/django-react-boilerplate)
+

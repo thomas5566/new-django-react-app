@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toastOnError } from "../../utils/Utils";
-import { GET_MOVIES, ADD_MOVIE, DELETE_MOVIE, UPDATE_MOVIE } from "./MoviesTypes";
+import { GET_MOVIES, ADD_MOVIE, DELETE_MOVIE, UPDATE_MOVIE, GET_PTTCOMMENTS, GET_IMAGELISTS } from "./MoviesTypes";
 
 export const getMovies = () => dispatch => {
     axios
@@ -8,6 +8,34 @@ export const getMovies = () => dispatch => {
         .then(response => {
             dispatch({
                 type: GET_MOVIES,
+                payload: response.data
+            });
+        })
+        .catch(error => {
+            toastOnError(error)
+        });
+};
+
+export const getPttcomments = () => dispatch => {
+    axios
+        .get("/api/movie/pttcomments/")
+        .then(response => {
+            dispatch({
+                type: GET_PTTCOMMENTS,
+                payload: response.data
+            });
+        })
+        .catch(error => {
+            toastOnError(error)
+        });
+};
+
+export const getImagelists = () => dispatch => {
+    axios
+        .get("/api/movie/slidermovieimage/")
+        .then(response => {
+            dispatch({
+                type: GET_IMAGELISTS,
                 payload: response.data
             });
         })

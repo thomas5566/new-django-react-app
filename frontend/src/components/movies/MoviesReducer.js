@@ -1,4 +1,4 @@
-import { GET_MOVIES, ADD_MOVIE, UPDATE_MOVIE, DELETE_MOVIE } from "./MoviesTypes";
+import { GET_MOVIES, ADD_MOVIE, UPDATE_MOVIE, DELETE_MOVIE, GET_PTTCOMMENTS, GET_IMAGELISTS } from "./MoviesTypes";
 
 const initialState = {
     movies: []
@@ -10,6 +10,16 @@ export const moviesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 movies: action.payload
+            };
+        case GET_PTTCOMMENTS:
+            return {
+                ...state,
+                pttcomments: action.payload
+            };
+        case GET_IMAGELISTS:
+            return {
+                ...state,
+                imagelists: action.payload
             };
         case ADD_MOVIE:
             return {

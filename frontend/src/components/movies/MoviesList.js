@@ -6,46 +6,9 @@ import { getMovies } from "./MoviesActions";
 import { Link } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap';
 
-import Movie from "./Movie";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// import * as scrollHelpers from '../common/scroll.helpers';
-
 class MoviesList extends Component {
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //       currentPage: 1
-    //     };
-    //     // Binds the handleScroll to this class (MovieBrowser)
-    //     // which provides access to MovieBrowser's props
-    //     // Note: You don't have to do this if you call a method
-    //     // directly from a lifecycle method or define an arrow function
-    //     this.handleScroll = this.handleScroll.bind(this);
-    // }
-
-    // componentDidMount() {
-    //     window.onscroll = this.handleScroll;
-    //     this.props.getTopMovies(this.state.currentPage);
-    //   }
-
-    // componentWillUnmount() {
-    //     window.removeEventListener('scroll', this.handleScroll);
-    // }
-
-    // handleScroll() {
-    //     const {topMovies} = this.props;
-    //     if (!topMovies.isLoading) {
-    //         let percentageScrolled = scrollHelpers.getPercentageScrolledDown(window);
-    //         if (percentageScrolled > .8) {
-    //         const nextPage = this.state.currentPage + 1;
-    //         this.props.getTopMovies(nextPage);
-    //         this.setState({currentPage: nextPage});
-    //         }
-    //     }
-    // }
 
     componentDidMount() {
         this.props.getMovies();
@@ -65,26 +28,32 @@ class MoviesList extends Component {
 
         let items = movies.map(movie => {
             return (
-                // <Movie key={movie.id} movie={movie} />
                 <div className="catalog__item" key={movie.id}>
+                    <Link
+                        to={{
+                            pathname: `/movie/${movie.id}`,
+                            state: { items: movie }
+                        }}
+                    >
                     <div className="catalog__item__img">
                         <img src={movie.images} alt={movie.title} />
-                        <div className="catalog__item__resume"> {movie.duration}</div>
+                        <div className="catalog__item__resume">
+                            {movie.duration}
+                            {movie.countgoodandbads.map((countgoodandbads) => (
+                                <div key={countgoodandbads.id}>
+                                    <div>PTT 好雷: {countgoodandbads.good_ray}</div>
+                                    <div>PTT 負雷: {countgoodandbads.bad_ray}</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                    </Link>
                     <div className="catalog__item__footer">
                         <div className="catalog__item__footer__name">
                             {movie.title} ({new Date(movie.release_date).getFullYear()})
                         </div>
                         <div className="catalog__item__footer__rating">{movie.rating}</div>
                     </div>
-                        <Link
-                            to={{
-                                pathname: `/movie/${movie.id}`,
-                                state: { items: movie }
-                            }}
-                        >
-                        <button>View</button>
-                    </Link>
                 </div>
             );
         });
@@ -95,9 +64,6 @@ class MoviesList extends Component {
                         {items}
                     </Row>
             </Container >
-            // <div className="catalogContainer">
-            //     {items}
-            // </div>
         );
     }
 }

@@ -1,15 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { deleteMovie, updateMovie } from "./MoviesActions";
-import { useLocation, Link } from "react-router-dom";
-import { Row ,Container, Col, Media } from 'react-bootstrap';
-import styled from 'styled-components'
+import React from "react";
+
+import { useLocation } from "react-router-dom";
+import { Row ,Container, Col } from 'react-bootstrap';
+// import PropTypes from "prop-types";
+// import { connect } from "react-redux";
+// import { withRouter } from "react-router-dom";
+// import { deleteMovie, updateMovie } from "./MoviesActions";
+// import styled from 'styled-components'
 // import { Button } from "react-bootstrap";
 import './Movie.css';
 import LazyLoad from "react-lazyload";
-
+import ReadMoreReact from 'read-more-react';
+import Badge from 'react-bootstrap/Badge';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import axios from "axios";
 
 const Spinner = () => (
   <div className="post loading">
@@ -44,45 +49,110 @@ const Spinner = () => (
   </div>
 );
 
+const responsive = {
+  superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1,
+  },
+  desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+  },
+  tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+  },
+  mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+  },
+};
+
 const Movie = _ => {
 
-    // onDeleteClick = () => {
-    //     const { movie } = this.props;
-    //     this.props.deleteMovie(movie.id);
-    // };
-    // onUpperCaseClick = () => {
-    //     const { movie } = this.props;
-    //     this.props.updateMovie(movie.id, {
-    //         title: movie.title.toUpperCase()
-    //     });
-    // };
-    // onLowerCaseClick = () =>{
-    //     const { movie } = this.props;
-    //     this.props.updateMovie(movie.id, {
-    //         title: movie.title.toLowerCase()
-    //     });
-    // };
-
     const { state } = useLocation();
+
+    // let urls = [
+    //   `http://127.0.0.1:8000/api/movie/pttcomments/?key_word=${state.items.id}`,
+    //   `http://127.0.0.1:8000/api/movie/slidermovieimage/?movie=${state.items.id}`
+    // ];
+
+    // let texts = [];
+
+    // Promise.all(urls.map(url =>
+    //   fetch(url).then(resp => resp.text())
+    //   )).then(t => {
+    //     texts.push(t)
+    //     console.log(texts);
+    //   })
+
+    let URL1 = `http://127.0.0.1:8000/api/movie/pttcomments/?key_word=${state.items.id}`
+    let URL2 = `http://127.0.0.1:8000/api/movie/slidermovieimage/?movie=${state.items.id}`
+    let datas = [];
+
+    const promise1 = axios.get(URL1);
+    const promise2 = axios.get(URL2);
+
+    Promise.all([promise1, promise2])
+      .then(function(values)
+        {
+          datas.push(values)
+          console.log(datas);
+
+          return datas
+        })
+        .catch(error => console.log(`Error in promises ${error}`));
 
     return (
         <Container>
         <Row>
         <Col sm={5} >
-            <img className="card-img-top image" src={state.items.images} alt="{{ movie.title }}"/>
+            <img className="card-img-top image" src={state.items.images} alt="{{ state.items.title }}"/>
+            <div>
+                <Carousel
+                    additionalTransfrom={0}
+                    showDots={false}
+                    arrows={true}
+                    autoPlaySpeed={3000}
+                    autoPlay={false}
+                    centerMode={false}
+                    className="carousel-hero"
+                    containerClass="container-with-dots"
+                    dotListClass="dots"
+                    draggable
+                    focusOnSelect={false}
+                    infinite
+                    itemClass="carousel-top"
+                    keyBoardControl
+                    minimumTouchDrag={80}
+                    renderButtonGroupOutside={false}
+                    renderDotsOutside
+                    responsive={responsive}>
+                    {state.items.slidermovieimages.map((slidermovieimages) => {
+                        return (
+                            <div className="mt-5" key={slidermovieimages.id}>
+                                <img className="media-img card-img-top card-img-hero" src={slidermovieimages.images} alt="Alt text"></img>
+                            </div>
+                        );
+                    })}
+                </Carousel>
+            </div>
         </Col>
 
         <Col sm={7} >
           <h1 className="name text-white">{ state.items.title }</h1>
-          <p className="star"><i className="fa fa-calendar df"></i>  { state.items.release_date }
-          <span style={{marginLeft: "20px"}}><i className="fa fa-star-o df"></i>  { state.items.rating } </span>
-          <span style={{marginLeft: "20px"}}><i className="fa fa-star-o df"></i>  { state.items.duration } </span>
-          <span style={{marginLeft: "20px"}}><i className="fa fa-star-o df"></i>  { state.items.amount_reviews } </span></p>
-          {/* <p className="star" >{ state.items.amount_reviews }</p> */}
-          {/* <h2 style={{color:"palegreen", fontFamily: "Segoe UI', Tahoma, Geneva, Verdana, sans-serif"}}>{ state.items.body  }</h2> */}
-          {/* <h5 className="star" style={{textAlign:"justify"}}>{ state.items.critics_consensus }</h5> */}
-          {/* {/* <h6 style={{color:"palegreen",marginTop:"15px"}}>Director : <span className="star">{ state.items.critics_consensus  }</span></h6> */}
-          <h6 style={{color:"palegreen",marginTop:"15px"}}> Description : <span className="star">{ state.items.critics_consensus }</span></h6>
+          <div>
+            <Badge variant="primary">{ state.items.release_date }</Badge>{' '}
+            <Badge variant="secondary">IMDb分數：{ state.items.rating }</Badge>{' '}
+            <Badge variant="success">{ state.items.duration }</Badge>{' '}
+            <Badge variant="danger">網友想看指數：{ state.items.amount_reviews }</Badge>{' '}
+          </div>
+          <h6 style={{color:"palegreen", marginTop:"15px", whiteSpace: "pre-wrap"}}>
+            <h5>OverView</h5>
+            <span className="star" style={{ whiteSpace: "pre-wrap"}}>
+              { state.items.critics_consensus }
+            </span>
+          </h6>
           <dev className="post-container">
             {state.items.pttcomments.map((pttcomments) => (
               <LazyLoad
@@ -96,69 +166,24 @@ const Movie = _ => {
                   <h4>{pttcomments.title}</h4>
                   <p>{pttcomments.author}</p>
                   <p>{pttcomments.date}</p>
-                  <p>{pttcomments.contenttext}</p>
-              </dev>
-
-            </div>
+                  <div style={{ whiteSpace: "pre-wrap"}}>
+                    <ReadMoreReact text={pttcomments.contenttext}
+                    min={70}
+                    ideal={90}
+                    max={500}
+                    readMoreText="Read more"/>
+                  </div>
+                </dev>
+              </div>
               </LazyLoad>
-
-
             ))}
           </dev>
-
-          {/* <span>{ state.items.pttcomments }</span> */}
         </Col>
         </Row>
-
-        {/* <div className="headerr" style={{marginTop: "30px"}}>
-        <h2 className="text-white" >{ state.items.title } Trailer </h2>
-        <hr className="hr" />
-        <iframe width="100%"  height="400" src={question.ytube} ></iframe>
-        <Iframe url={question.ytube}
-          width="100%"  height="400"
-          id="myId"
-          className="myClassname"
-          display="initial"
-          position="relative"
-          allowFullScreen/>
-
-        </div>*/}
-
-
-        {/* <h2 className="text-white" >Cast And Crews </h2><hr className="hr" />
-        <Row>
-          <Col sm={2} style={{marginTop: "15px"}} >
-          <Media className="card">
-              <img className="card-img-top image" src="" alt="Just" style={{height: "210px", width: "155px", border: "1px solid rgba(137, 255, 162, 0.78) }}"}}  />
-                <div className="middle">
-                  <p className="p">lol</p>
-                  <p className="p">Rol</p>
-                  <p className="p">mn</p>
-                </div>
-              </Media>
-          </Col>
-        </Row> */}
-
-
         </Container>
-        // <div key={state.items.id}>
-        //     <div >
-        //         <img src={state.items.images} alt={state.items.title} />
-        //         <div > {state.items.duration}</div>
-        //     </div>
-        //     <div >
-        //         <div >
-        //             {state.items.title} ({new Date(state.items.release_date).getFullYear()})
-        //         </div>
-        //         <div >{state.items.rating}</div>
-        //     </div>
-        // </div>
     );
-    // render() {
-    //     // const { movie } = this.props;
-
-    // }
 }
+
 
 // Movie.propTypes = {
 //     movie: PropTypes.object.isRequired

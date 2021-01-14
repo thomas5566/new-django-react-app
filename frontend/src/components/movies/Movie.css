@@ -1,4 +1,4 @@
-.catalogContainer {
+  .catalogContainer {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -67,6 +67,7 @@
     color: #f5cc5b;
     border-radius: 10px;
   }
+
   body {
     margin: 0;
     padding: 0;

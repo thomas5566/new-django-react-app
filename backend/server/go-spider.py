@@ -5,6 +5,6 @@ from botmovies.spiders.yahoo import YahooSpider
 
 
 process = CrawlerProcess(get_project_settings())
-# process.crawl(PttMoviesSpider)
+process.crawl(PttMoviesSpider)
 process.crawl(YahooSpider)
 process.start()
