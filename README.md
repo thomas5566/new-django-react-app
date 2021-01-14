@@ -16,10 +16,10 @@ It uses Scrapy crawl web informations and Django REST framework Database API.
 - PostgreSQL database
 
 ## Screenshots
-<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/3.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/4.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/5.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/6.png" /></kbd>
+<kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/3.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/1.png" /></kbd>
 <kbd><img src="https://github.com/thomas5566/new-django-react-app/blob/main/frontend/docs/images/2.png" /></kbd>
 
