@@ -3,9 +3,6 @@
 This is a Movie App built in [ReactJS].
 It uses Scrapy crawl web informations and Django REST framework Database API.
 
-## Live Demo
-[Django & ReactJS App] (https://github.com/thomas5566/new-django-react-app)
-
 ## Features
 - Scrapy 2.0
 - Backend with Django Rest Framework API: Authentication, Creating objects, Filtering, Uploading image
