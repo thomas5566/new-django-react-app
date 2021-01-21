@@ -1,7 +1,7 @@
 # Movie Web App
 
-This is a Movie App built in [ReactJS].
-It uses Scrapy crawl web informations and Django REST framework Database API.
+- This is a Movie App built in ReactJS and Django REST framework.
+- It uses Scrapy crawl web informations and Django REST framework Database API.
 
 ## Features
 - Scrapy 2.0
