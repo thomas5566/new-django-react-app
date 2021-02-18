@@ -1,7 +1,7 @@
 # Movie Web App
 
-- This is a Movie App built in ReactJS and Django REST framework.
-- It uses Scrapy crawl web informations and Django REST framework Database API.
+- This is a Movie Web App built in React and Django REST framework, we will make a simple application that is Movie-Rater-App which has CRUD operations in it.
+- It's based on Scrapy crawl web informations and Django REST framework Database API (Back-end) + React (Front-End) .
 
 ## Features
 - Scrapy 2.0
